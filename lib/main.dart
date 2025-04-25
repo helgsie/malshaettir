@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'screens/quote_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MalshatturApp());
@@ -18,11 +19,11 @@ class MalshatturApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink.shade300),
-        fontFamily: 'SFPro',
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber.shade400),
+        scaffoldBackgroundColor: Colors.amber.shade400,
         textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Colors.brown.shade600),
-          bodyMedium: TextStyle(color: Colors.pink.shade600),
+          headlineLarge: GoogleFonts.lato(fontSize: 26, fontWeight: FontWeight.bold),
+          bodyLarge: GoogleFonts.lato(fontSize: 20),
         ),
       ),
       home: const QuotePage(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hvatning/models/quote_model.dart';
-import 'package:hvatning/widgets/quote_button.dart';
 import 'dart:math';
 
 class QuotePage extends StatefulWidget {
@@ -11,7 +10,7 @@ class QuotePage extends StatefulWidget {
 }
 
 class _QuotePageState extends State<QuotePage> {
-  String _currentQuote = "Fáðu málshátt í tilefni páskanna!";
+  String _currentQuote = "";
 
   // Fall sem velur málshátt úr lista handahófskennt
   void _getNewQuote() {
@@ -23,45 +22,83 @@ class _QuotePageState extends State<QuotePage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Páskamálshættir"),
-        centerTitle: true,
-        backgroundColor: theme.colorScheme.primaryContainer,
-        elevation: 10,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
+      body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 100),
-                child: Text(
-                  _currentQuote,
-                  key: ValueKey(_currentQuote),
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontSize: screenWidth > 600 ? 24 : 18,
-                    color: theme.colorScheme.onSurface,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Fáðu málshátt í tilefni páskanna!",
+                  style: theme.textTheme.headlineLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize: 24,
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 40),
-              QuoteButton(onPressed: _getNewQuote),
-              const SizedBox(height: 40),
-              Image.asset(
-                'assets/paskaegg.png',
-                width: 70,
-              ),
-            ],
+                const SizedBox(height: 32),
+                SizedBox(
+                  width: 320,
+                  height: 200,
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 100),
+                      child: Text(
+                        _currentQuote,
+                        key: ValueKey(_currentQuote),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: 320,
+                  child: FilledButton.icon(
+                    onPressed: _getNewQuote,
+                    icon: const Icon(Icons.refresh),
+                    label: const Text("Nýr málsháttur"),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.amber.shade800,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      textStyle: theme.textTheme.bodyLarge?.copyWith(fontSize: 18),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                Image.asset(
+                  'assets/paskaegg.png',
+                  width: 70,
+                ),
+              ],
+            ),
           ),
         ),
-      )
+      ),
     );
   }
 }
